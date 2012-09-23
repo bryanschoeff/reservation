@@ -1,47 +1,40 @@
 /*globals _ */
 var Reservation = Backbone.Model.extend({
-    defaults: {
-        date: '',
-        time: '',
-        requestor: ''
-    },
+});
 
+var ReservationList = Backbone.Collection.extend({
+    url: "reservations.json",
+});
+
+
+var ReservationListView = Backbone.View.extend({
+
+    template: _.template($("#template").html()),
+
+                         
     initialize: function () {
-        this.date = this.defaults.date;
-        this.time = this.defaults.time;
-        this.requestor = this.defaults.requestor;
-    }
-
-
-});
-
-var Reservations = Backbone.Collection.extend({
-    model: Reservation
-        
-});
-
-var ReservationView = Backbone.View.extend({
-        
-    // template: _.template($("#reservation-template").html()),
-    //template: _.template("oh hai"),
+        this.collection = new ReservationList();
+    },
 
     render: function () {
-        //this.$el.html(this.template(this.model.toJSON()));
-        this.el.html("sup bro");
-    },
+        var outer = this;
+        $(this.el).html("");
 
-    initialize: function () {
-        this.model = new Reservation();
-        this.el = $("main");
+        this.collection.each(function (item) {
+            $(outer.el).append(outer.template(item.toJSON()));
+        });
+
+        return this.el;
     }
 
+
 });
 
-$(function () {
-    var addReservation = new ReservationView();
-    console.log(addReservation);
-    addReservation.render();
 
-    //$("#main").html(addReservation.el);
+var pageview = new ReservationListView();
+
+$(document).ready(function () {
+    pageview.collection.fetch().complete(function () {
+        $("#main").html(pageview.render());
+    });
 });
-
