@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  seats: 1
+  when: 2012-08-29 04:38:52
+  notes: MyText
+
+two:
+  first_name: MyString
+  last_name: MyString
+  seats: 1
+  when: 2012-08-29 04:38:52
+  notes: MyText
