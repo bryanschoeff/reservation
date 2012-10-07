@@ -1,5 +1,7 @@
 Reservation::Application.routes.draw do
-  resources :appointments
+  root to: "main#index"
+
+  resources :appointments, :defaults => { :format => 'json' }
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
