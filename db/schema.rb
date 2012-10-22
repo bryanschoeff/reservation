@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829083851) do
+ActiveRecord::Schema.define(:version => 20121022022756) do
 
   create_table "appointments", :force => true do |t|
     t.string   "first_name"
@@ -19,6 +19,34 @@ ActiveRecord::Schema.define(:version => 20120829083851) do
     t.integer  "seats"
     t.datetime "when"
     t.text     "notes"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "tables", :force => true do |t|
+    t.integer  "seats"
+    t.integer  "venue_id"
+    t.integer  "appointment_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "tables", ["appointment_id"], :name => "index_tables_on_appointment_id"
+  add_index "tables", ["venue_id"], :name => "index_tables_on_venue_id"
+
+  create_table "timeslots", :force => true do |t|
+    t.integer  "hour"
+    t.integer  "appointment_id"
+    t.integer  "table_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "timeslots", ["appointment_id"], :name => "index_timeslots_on_appointment_id"
+  add_index "timeslots", ["table_id"], :name => "index_timeslots_on_table_id"
+
+  create_table "venues", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

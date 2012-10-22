@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Seats:
+  = @table.seats
+%p
+  %b Venue:
+  = @table.venue_id
+%p
+  %b Appointment:
+  = @table.appointment_id
+
+= link_to 'Edit', edit_table_path(@table)
+\|
+= link_to 'Back', tables_path

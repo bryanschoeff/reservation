@@ -1,15 +1,17 @@
 /*globals _ */
 var template;
 var ajaxCalls = {};
+ajaxCalls.appointments = {};
+ajaxCalls.timeslots = {};
 
-ajaxCalls.addNew = function(firstname, lastname, seats, when) {
+ajaxCalls.appointments.addNew = function(firstname, lastname, seats, when) {
   var data = { appointment: { first_name: firstname, last_name: lastname, seats: seats, when: when}};
   $.post('/appointments', data, function () {
-    ajaxCalls.loadAll();
+    ajaxCalls.appointments.loadAll();
   });
 };
 
-ajaxCalls.loadAll = function() {
+ajaxCalls.appointments.loadAll = function() {
   $('#main').html('');
   $.getJSON('/appointments', function (data) {
     var result = { results: data };
@@ -19,7 +21,7 @@ ajaxCalls.loadAll = function() {
   });
 };
 
-ajaxCalls.updateItem = function (id, data) {
+ajaxCalls.appointments.updateItem = function (id, data) {
     $.ajax({
         type: 'PUT',
         url: '/appointments/' + id,
@@ -28,7 +30,7 @@ ajaxCalls.updateItem = function (id, data) {
     });
 };
 
-ajaxCalls.deleteItem = function (id) {
+ajaxCalls.appointments.deleteItem = function (id) {
     $.ajax({
         type: 'DELETE',
         url: '/appointments/' + id
@@ -37,12 +39,21 @@ ajaxCalls.deleteItem = function (id) {
 };
 
 $(document).ready(function () {
-  template = _.template($("#template").html()); 
+  template = _.template(templates.reservation); 
   $('#addReservation').click( function() {
     ajaxCalls.addNew($('#firstname').val(), $('#lastname').val(), 
                      $('#seats').val(), $('#when').val());
   });
 
-  ajaxCalls.loadAll();
+  ajaxCalls.appointments.loadAll();
+  ajaxCalls.timeslots.loadAll();
 });
 
+ajaxCalls.timeslots.loadAll = function() {
+  $.getJSON('/timeslots', function (data) {
+    var result = { results: data };
+    _.each(data, function(item) {
+      $('#timeslots').append(template(item)); 
+    }); 
+  });
+};

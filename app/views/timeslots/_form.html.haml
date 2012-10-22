@@ -1,0 +1,19 @@
+= form_for @timeslot do |f|
+  - if @timeslot.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@timeslot.errors.count, "error")} prohibited this timeslot from being saved:"
+      %ul
+        - @timeslot.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :hour
+    = f.number_field :hour
+  .field
+    = f.label :appointment
+    = f.text_field :appointment
+  .field
+    = f.label :table
+    = f.text_field :table
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Hour:
+  = @timeslot.hour
+%p
+  %b Appointment:
+  = @timeslot.appointment
+%p
+  %b Table:
+  = @timeslot.table
+
+= link_to 'Edit', edit_timeslot_path(@timeslot)
+\|
+= link_to 'Back', timeslots_path

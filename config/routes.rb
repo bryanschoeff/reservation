@@ -1,4 +1,10 @@
 Reservation::Application.routes.draw do
+  resources :timeslots
+
+  resources :tables
+
+  resources :venues
+
   root to: "main#index"
 
   resources :appointments, :defaults => { :format => 'json' }
