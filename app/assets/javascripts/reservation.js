@@ -2,8 +2,8 @@
 var template;
 var ajaxCalls = {};
 
-ajaxCalls.addNew = function(firstname, lastname, seats, notes) {
-  var data = { appointment: { first_name: firstname, last_name: lastname, seats: seats, notes: notes }};
+ajaxCalls.addNew = function(firstname, lastname, seats, when) {
+  var data = { appointment: { first_name: firstname, last_name: lastname, seats: seats, when: when}};
   $.post('/appointments', data, function () {
     ajaxCalls.loadAll();
   });
@@ -25,7 +25,6 @@ ajaxCalls.updateItem = function (id, data) {
         url: '/appointments/' + id,
         data: data
     }).done(function () {
-        stateEvents.loadList();
     });
 };
 
@@ -34,14 +33,14 @@ ajaxCalls.deleteItem = function (id) {
         type: 'DELETE',
         url: '/appointments/' + id
     }).done(function () {
-        stateEvents.loadList();
     });
 };
 
 $(document).ready(function () {
   template = _.template($("#template").html()); 
   $('#addReservation').click( function() {
-    ajaxCalls.addNew($('#firstname').val(), $('#lastname').val(), $('#seats').val(), "");
+    ajaxCalls.addNew($('#firstname').val(), $('#lastname').val(), 
+                     $('#seats').val(), $('#when').val());
   });
 
   ajaxCalls.loadAll();
